@@ -17,8 +17,9 @@
     </script>
     <link rel="stylesheet" href="../../css/shared.css" />
     <link rel="stylesheet" href="../../css/transport.css" />
+    <link rel="stylesheet" href="../../css/signature.css" />
   </head>
-  <body>
+  <body data-module="transport">
     <a class="skip-link" href="#invoice-main">Skip to invoice</a>
     <div class="page">
       <header class="billhead" aria-label="Billhead">
@@ -164,12 +165,16 @@
             </tbody>
           </table>
 
-          <div class="sign-row">
-            <div class="sign-left"></div>
-            <div class="sign-right">
-              <p class="sign-name" contenteditable="true" id="signVendor">NIKITA TRADERS</p>
-              <p class="sign-line" contenteditable="true" id="signName">Bharat-kumar</p>
-              <p class="sign-role">Proprietor</p>
+          <div class="right-container">
+            <div class="signature-box">
+              <p class="company">FOR NIKITA TRADERS</p>
+              <img
+                src="../../assets/signature.png"
+                class="sign-img"
+                alt="Nikita Traders — authorised signatory"
+                decoding="async"
+              />
+              <p class="auth">AUTHORISED SIGNATORY</p>
             </div>
           </div>
         </section>

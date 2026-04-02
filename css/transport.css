@@ -295,33 +295,42 @@ td input[type="number"]::-webkit-inner-spin-button {
   font-weight: 700;
 }
 
-.sign-row {
-  display: grid;
-  grid-template-columns: 1fr 260px;
-  gap: 10px;
-  align-items: end;
+/* Right-aligned signature (Transport only; body[data-module="transport"]) */
+body[data-module="transport"] .right-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
   padding: 10px 8px 12px;
   border-top: 1px solid #111;
+  box-sizing: border-box;
 }
 
-.sign-right {
-  text-align: left;
+body[data-module="transport"] .right-container .signature-box {
+  text-align: center;
+  margin-top: 40px;
+  width: 250px;
+  max-width: min(250px, 100%);
+  text-transform: none;
+  flex-shrink: 0;
 }
 
-.sign-name {
-  margin: 0 0 10px;
-  font-weight: 700;
-  text-transform: uppercase;
+body[data-module="transport"] .right-container .company {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 0 15px;
 }
 
-.sign-line {
-  margin: 0;
-  min-height: 22px;
-  display: inline-block;
+body[data-module="transport"] .right-container .sign-img {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
 }
 
-.sign-role {
-  margin: 4px 0 0;
+body[data-module="transport"] .right-container .auth {
+  margin: 15px 0 0;
   font-size: 13px;
 }
 
@@ -390,8 +399,14 @@ td input:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .sign-row {
-    grid-template-columns: 1fr;
+  body[data-module="transport"] .right-container {
+    justify-content: flex-end;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  body[data-module="transport"] .right-container .signature-box {
+    width: min(250px, 100%);
   }
 }
 
@@ -457,30 +472,30 @@ td input:focus-visible {
     padding: 4px;
   }
 
-  .sign-row {
-    grid-template-columns: 1fr 260px !important;
-    padding: 4px 6px 6px;
-    gap: 6px;
+  body[data-module="transport"] .right-container {
+    justify-content: flex-end;
+    padding: 6px 6px 8px;
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
-  .sign-right {
-    justify-self: end;
-    text-align: left;
+  body[data-module="transport"] .right-container .signature-box {
+    margin-top: 20px;
+    width: 220px;
   }
 
-  .sign-name {
-    margin: 0 0 4px;
+  body[data-module="transport"] .right-container .company {
+    font-size: 14px;
+    margin-bottom: 10px;
   }
 
-  .sign-role {
-    margin: 2px 0 0;
-    font-size: 11px;
+  body[data-module="transport"] .right-container .sign-img {
+    width: 140px;
   }
 
-  .sign-line {
-    min-height: 16px;
+  body[data-module="transport"] .right-container .auth {
+    font-size: 12px;
+    margin-top: 10px;
   }
 
   .boxed:last-child {

@@ -1,0 +1,72 @@
+/* Shared signature block; module look controlled by body[data-module]. */
+
+.signature-box {
+  text-align: center;
+  margin-top: 20px;
+  text-transform: none;
+}
+
+.signature-box .company-name,
+.signature-box .sign-person,
+.signature-box .auth-text {
+  margin: 0;
+}
+
+.signature-box .company-name {
+  margin-bottom: 8px;
+}
+
+.signature-box .sign-person {
+  margin-top: 8px;
+}
+
+.signature-box .auth-text {
+  margin-top: 6px;
+}
+
+.signature-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Transport signature layout: see transport.css (.right-container). */
+
+/* INVOICE DESK → larger / emphasized */
+body[data-module="invoice"] .signature-img {
+  width: 140px;
+}
+
+body[data-module="invoice"] .company-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+body[data-module="invoice"] .auth-text {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+body[data-module="invoice"] .sign-person {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+body[data-module="invoice"] .signature-box {
+  margin-top: 40px;
+  border-top: 1px solid #000;
+  padding-top: 15px;
+}
+
+/* PDF capture (Invoice Desk) */
+body.pdf-export[data-module="invoice"] .signature-box {
+  margin-top: 24px;
+  padding-top: 10px;
+}
+
+body.pdf-export[data-module="invoice"] .signature-img {
+  width: 120px;
+}
