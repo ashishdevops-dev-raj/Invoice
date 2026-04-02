@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grocery Bill → PDF</title>
+    <link rel="stylesheet" href="../../css/grocery.css" />
+  </head>
+  <body>
+    <header class="topbar no-print">
+      <div class="topbar__title">
+        <div class="topbar__kicker">Grocery Bill</div>
+        <div class="topbar__headline">Invoice Builder (HTML/CSS/JS)</div>
+      </div>
+      <div class="topbar__actions">
+        <button id="btnNew" class="btn btn--ghost" type="button">New</button>
+        <button id="btnSave" class="btn btn--ghost" type="button">Save</button>
+        <button id="btnPrint" class="btn btn--primary" type="button">Download PDF</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel no-print" aria-label="Invoice inputs">
+        <div class="panel__section">
+          <div class="grid">
+            <label class="field">
+              <span class="field__label">Shop name</span>
+              <input id="sellerName" class="field__input" type="text" placeholder="NIKITA TRADERS" />
+            </label>
+            <label class="field">
+              <span class="field__label">GSTIN</span>
+              <input id="sellerGstin" class="field__input" type="text" placeholder="21AIQPK9098N1ZD" />
+            </label>
+            <label class="field grid__full">
+              <span class="field__label">Address (multi-line)</span>
+              <textarea id="sellerAddress" class="field__input field__input--ta" rows="4" placeholder="Ward No-09, House No-003, Paikaraypur Near Niser Jatni&#10;Khordha, Odisha - 752050,India"></textarea>
+            </label>
+            <label class="field grid__full">
+              <span class="field__label">State</span>
+              <input id="sellerState" class="field__input" type="text" placeholder="21-ODISHA" />
+            </label>
+          </div>
+        </div>
+
+        <div class="panel__section">
+          <h2 class="panel__h">Bill To</h2>
+          <div class="grid">
+            <label class="field">
+              <span class="field__label">Customer name</span>
+              <input id="billToName" class="field__input" type="text" placeholder="M/S PERFECTION" />
+            </label>
+            <label class="field">
+              <span class="field__label">GSTIN (optional)</span>
+              <input id="billToGstin" class="field__input" type="text" placeholder="19AAOCP8586B1ZT" />
+            </label>
+            <label class="field grid__full">
+              <span class="field__label">Address (multi-line)</span>
+              <textarea id="billToAddress" class="field__input field__input--ta" rows="3" placeholder="Kheyadaha Road, Deora, South 24 Parganas&#10;West Bengal, Code 19"></textarea>
+            </label>
+            <label class="field grid__full">
+              <span class="field__label">Place of supply</span>
+              <textarea id="placeOfSupply" class="field__input field__input--ta" rows="4" placeholder="Mediversal Simran Multi Super Speciality Hospital&#10;Ulao Rd, Singhaul Dih, Begusarai, Bihar 851134"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel__section">
+          <h2 class="panel__h">Invoice</h2>
+          <div class="grid">
+            <label class="field">
+              <span class="field__label">Invoice no.</span>
+              <input id="invoiceNo" class="field__input" type="text" placeholder="01" />
+            </label>
+            <label class="field">
+              <span class="field__label">Date</span>
+              <input id="invoiceDate" class="field__input" type="date" />
+            </label>
+          </div>
+        </div>
+
+        <div class="panel__section">
+          <div class="panel__row">
+            <h2 class="panel__h">Items</h2>
+            <button id="btnAddItem" class="btn btn--ghost" type="button">+ Add item</button>
+          </div>
+
+          <div class="items" role="region" aria-label="Items list">
+            <div class="items__head">
+              <div>Item name</div>
+              <div>UOM</div>
+              <div class="num">Qty</div>
+              <div class="num">Rate</div>
+              <div class="num">Amount</div>
+              <div></div>
+            </div>
+            <div id="itemsBody" class="items__body"></div>
+          </div>
+
+          <div class="panel__row">
+            <h2 class="panel__h">Return items</h2>
+            <button id="btnAddReturnItem" class="btn btn--ghost" type="button">+ Add return</button>
+          </div>
+
+          <div id="return-panel-wrap" class="return-panel-wrap" style="display: none">
+            <div class="items" role="region" aria-label="Return items list">
+              <div class="items__head">
+                <div>Item name</div>
+                <div>UOM</div>
+                <div class="num">Qty</div>
+                <div class="num">Rate</div>
+                <div class="num">Amount</div>
+                <div></div>
+              </div>
+              <div id="returnItemsBody" class="items__body"></div>
+            </div>
+          </div>
+
+          <div class="totals">
+            <label class="field totals__line">
+              <span class="field__label">Freight / charges</span>
+              <input id="charges" class="field__input num" type="number" min="0" step="0.01" value="0" />
+            </label>
+            <label class="field totals__line">
+              <span class="field__label">Discount</span>
+              <input id="discount" class="field__input num" type="number" min="0" step="0.01" value="0" />
+            </label>
+            <label class="field totals__line">
+              <span class="field__label">Tax (%)</span>
+              <input id="taxPct" class="field__input num" type="number" min="0" step="0.01" value="0" />
+            </label>
+          </div>
+        </div>
+
+        <div class="panel__section">
+          <h2 class="panel__h">Pay To (optional)</h2>
+          <div class="grid">
+            <label class="field">
+              <span class="field__label">Bank name</span>
+              <input id="bankName" class="field__input" type="text" placeholder="HDFC" />
+            </label>
+            <label class="field">
+              <span class="field__label">Account no.</span>
+              <input id="bankAcc" class="field__input" type="text" placeholder="50100319579456" />
+            </label>
+            <label class="field">
+              <span class="field__label">IFSC</span>
+              <input id="bankIfsc" class="field__input" type="text" placeholder="HDFC0009686" />
+            </label>
+            <label class="field">
+              <span class="field__label">Account holder</span>
+              <input id="bankHolder" class="field__input" type="text" placeholder="MANISH KUMAR" />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview" aria-label="Invoice preview">
+        <article id="invoice" class="invoice">
+          <div class="invoice__meta">
+            <div class="invoice__title">INVOICE</div>
+            <div class="invoice__brand">
+              <div id="vSellerName" class="invoice__seller">—</div>
+            </div>
+          </div>
+
+          <div class="invoice__top">
+            <section class="box box--seller">
+              <div id="vSellerAddress" class="box__p box__p--addr"></div>
+              <div class="box__kv box__kv--seller">
+                <div><span class="k">GSTIN:</span> <span id="vSellerGstin" class="box__val">—</span></div>
+                <div><span class="k">State:</span> <span id="vSellerState" class="box__val">—</span></div>
+              </div>
+            </section>
+
+            <section class="box box--invoiceMeta">
+              <div class="box__h">Invoice details</div>
+              <div class="box__kv box__kv--invoice">
+                <div><span class="k">Invoice No:</span> <span id="vInvoiceNo" class="box__val">—</span></div>
+                <div><span class="k">Date:</span> <span id="vInvoiceDate" class="box__val">—</span></div>
+              </div>
+            </section>
+
+            <section class="box box--billto">
+              <div class="billto-split">
+                <div class="billto-split__col billto-split__col--left">
+                  <div class="box__h box__h--split">Bill to</div>
+                  <div id="vBillToName" class="box__p box__p--strong">—</div>
+                  <div id="vBillToAddress" class="box__p"></div>
+                  <div class="box__kv box__kv--billto">
+                    <div><span class="k">GSTIN:</span> <span id="vBillToGstin" class="box__val">—</span></div>
+                  </div>
+                </div>
+                <div class="billto-split__rule" aria-hidden="true"></div>
+                <div class="billto-split__col billto-split__col--right">
+                  <div class="box__h box__h--split">Place of supply-</div>
+                  <div id="vPlaceSupply" class="box__p box__p--place">—</div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="table">
+            <div class="table__row table__row--head">
+              <div>SL.NO</div>
+              <div>ITEM NAME</div>
+              <div>UOM</div>
+              <div class="num">QTY</div>
+              <div class="num">RATE</div>
+              <div class="num">AMOUNT</div>
+            </div>
+            <div id="vItems"></div>
+          </div>
+
+          <div id="return-section" style="display: none">
+            <div class="invoice-table-wrap invoice-table-wrap--returns">
+              <div class="invoice-table-wrap__title">Return Items</div>
+              <div class="table">
+                <div class="table__row table__row--head">
+                  <div>SL.NO</div>
+                  <div>ITEM NAME</div>
+                  <div>UOM</div>
+                  <div class="num">QTY</div>
+                  <div class="num">RATE</div>
+                  <div class="num">AMOUNT</div>
+                </div>
+                <div id="vReturnItems"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="invoice__bottom">
+            <div class="payto" id="vPayToWrap">
+              <div class="payto__h">Pay To:</div>
+              <div class="payto__line"><span class="k">Bank Name:</span> <span id="vBankName">—</span></div>
+              <div class="payto__line"><span class="k">Bank Acc No:</span> <span id="vBankAcc">—</span></div>
+              <div class="payto__line"><span class="k">Bank IFSC code:</span> <span id="vBankIfsc">—</span></div>
+              <div class="payto__line"><span class="k">Account Holder's Name:</span> <span id="vBankHolder">—</span></div>
+            </div>
+
+            <div class="invoice__summaryCol">
+              <div class="summary">
+                <div class="summary__line">
+                  <div>Subtotal</div>
+                  <div id="vSubtotal" class="num">0.00</div>
+                </div>
+                <div id="return-summary-line" class="summary__line" style="display: none">
+                  <div>Return amount</div>
+                  <div id="vReturnAmount" class="num">0.00</div>
+                </div>
+                <div class="summary__line">
+                  <div>Charges</div>
+                  <div id="vCharges" class="num">0.00</div>
+                </div>
+                <div class="summary__line">
+                  <div>Discount</div>
+                  <div id="vDiscount" class="num">0.00</div>
+                </div>
+                <div class="summary__line">
+                  <div>Tax</div>
+                  <div id="vTax" class="num">0.00</div>
+                </div>
+                <div class="summary__line summary__line--grand">
+                  <div>Grand total</div>
+                  <div id="vGrand" class="num">0.00</div>
+                </div>
+              </div>
+
+              <div class="sign">
+                <div class="sign__right">
+                  <div class="sign__for">FOR <span id="vSignFor">—</span></div>
+                  <div class="sign__stamp">
+                    <img
+                      class="sign__img"
+                      src="../../assets/signature1.png"
+                      alt="Proprietor signature"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="sign__sig">Authorised signatory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="../../js/grocery.js"></script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Unified dashboard: Grocery bill, GST Invoice Desk, and Transport invoices." />
+    <title>Invoice Suite — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="app-header__brand">
+          <span class="app-header__kicker">Unified workspace</span>
+          <h1 class="app-header__title">Invoice Suite</h1>
+        </div>
+        <div class="app-header__actions">
+          <button id="btn-back-home" class="app-btn app-btn--ghost" type="button">Dashboard</button>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <aside class="app-sidebar" aria-label="Module navigation">
+          <span class="app-nav-label">Modules</span>
+          <button type="button" class="app-nav-btn" data-module="grocery">
+            <span class="app-nav-btn__icon" aria-hidden="true">🛒</span>
+            Grocery
+          </button>
+          <button type="button" class="app-nav-btn" data-module="invoice">
+            <span class="app-nav-btn__icon" aria-hidden="true">📄</span>
+            Invoice Desk
+          </button>
+          <button type="button" class="app-nav-btn" data-module="transport">
+            <span class="app-nav-btn__icon" aria-hidden="true">🚚</span>
+            Transport
+          </button>
+        </aside>
+
+        <main class="app-main">
+          <section id="view-home" class="view view-dashboard">
+            <div class="view-dashboard__intro">
+              <h2>Choose a module</h2>
+              <p>Open a tool in full screen below. Each module runs in its own frame so layouts and scripts stay independent.</p>
+            </div>
+            <div class="dashboard-grid">
+              <button type="button" class="dashboard-card" data-open-module="grocery">
+                <div class="dashboard-card__title">Grocery Bill</div>
+                <p class="dashboard-card__desc">Build a grocery invoice PDF with line items, returns, tax, and bank details.</p>
+              </button>
+              <button type="button" class="dashboard-card" data-open-module="invoice">
+                <div class="dashboard-card__title">Invoice Desk</div>
+                <p class="dashboard-card__desc">GST invoice with SGST/CGST breakdown and PDF download (html2canvas + jsPDF).</p>
+              </button>
+              <button type="button" class="dashboard-card" data-open-module="transport">
+                <div class="dashboard-card__title">Transport Invoice</div>
+                <p class="dashboard-card__desc">Classic transport layout with totals in words and print.</p>
+              </button>
+            </div>
+          </section>
+
+          <section id="view-iframe" class="view view-iframe" hidden>
+            <iframe
+              id="frame-grocery"
+              class="module-iframe"
+              title="Grocery Bill — PDF"
+              src="modules/grocery/index.html"
+              hidden
+            ></iframe>
+            <iframe
+              id="frame-invoice"
+              class="module-iframe"
+              title="Invoice Desk — GST"
+              src="modules/invoice/index.html"
+              hidden
+            ></iframe>
+            <iframe
+              id="frame-transport"
+              class="module-iframe"
+              title="Transport Invoice"
+              src="modules/transport/index.html"
+              hidden
+            ></iframe>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
