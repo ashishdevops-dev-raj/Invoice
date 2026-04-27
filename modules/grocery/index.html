@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Grocery Bill → PDF</title>
     <link rel="stylesheet" href="../../css/grocery.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZWL4KFM6W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-KZWL4KFM6W");
+    </script>
   </head>
   <body>
     <header class="topbar no-print">
@@ -140,7 +149,7 @@
             </label>
             <label class="field">
               <span class="field__label">Account no.</span>
-              <input id="bankAcc" class="field__input" type="text" placeholder="50100319579456" />
+              <input id="bankAcc" class="field__input" type="text" placeholder="50100319579546" />
             </label>
             <label class="field">
               <span class="field__label">IFSC</span>
@@ -149,6 +158,14 @@
             <label class="field">
               <span class="field__label">Account holder</span>
               <input id="bankHolder" class="field__input" type="text" placeholder="MANISH KUMAR" />
+            </label>
+            <label class="field">
+              <span class="field__label">Branch</span>
+              <input id="bankBranch" class="field__input" type="text" placeholder="BHAGWAN BAZAR CHHAPRA" />
+            </label>
+            <label class="field">
+              <span class="field__label">Account type</span>
+              <input id="bankType" class="field__input" type="text" placeholder="Savings Account" />
             </label>
           </div>
         </div>
@@ -235,6 +252,8 @@
               <div class="payto__line"><span class="k">Bank Acc No:</span> <span id="vBankAcc">—</span></div>
               <div class="payto__line"><span class="k">Bank IFSC code:</span> <span id="vBankIfsc">—</span></div>
               <div class="payto__line"><span class="k">Account Holder's Name:</span> <span id="vBankHolder">—</span></div>
+              <div class="payto__line"><span class="k">Branch:</span> <span id="vBankBranch">—</span></div>
+              <div class="payto__line"><span class="k">Account Type:</span> <span id="vBankType">—</span></div>
             </div>
 
             <div class="invoice__summaryCol">
@@ -258,6 +277,10 @@
                 <div class="summary__line">
                   <div>Tax</div>
                   <div id="vTax" class="num">0.00</div>
+                </div>
+                <div class="summary__line">
+                  <div>Round off</div>
+                  <div id="vRoundOff" class="num">0.00</div>
                 </div>
                 <div class="summary__line summary__line--grand">
                   <div>Grand total</div>

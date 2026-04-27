@@ -68,9 +68,11 @@ function defaultDoc() {
     discount: 0,
     taxPct: 0,
     bankName: "HDFC",
-    bankAcc: "50100319579456",
+    bankAcc: "50100319579546",
     bankIfsc: "HDFC0009686",
     bankHolder: "MANISH KUMAR",
+    bankBranch: "BHAGWAN BAZAR CHHAPRA",
+    bankType: "Savings Account",
     items: [
       { name: "Amul Gold (Tetra Pack)", uom: "PKT", qty: 12, rate: 80 },
   
@@ -98,6 +100,8 @@ function readForm() {
     bankAcc: $("bankAcc").value.trim(),
     bankIfsc: $("bankIfsc").value.trim(),
     bankHolder: $("bankHolder").value.trim(),
+    bankBranch: $("bankBranch").value.trim(),
+    bankType: $("bankType").value.trim(),
     items: state.items.map((x) => ({ name: x.name, uom: x.uom, qty: n2(x.qty), rate: n2(x.rate) })),
     returnItems: state.returnItems.map((x) => ({ name: x.name, uom: x.uom, qty: n2(x.qty), rate: n2(x.rate) })),
   };
@@ -125,6 +129,8 @@ function writeForm(doc) {
   $("bankAcc").value = doc.bankAcc ?? "";
   $("bankIfsc").value = doc.bankIfsc ?? "";
   $("bankHolder").value = doc.bankHolder ?? "";
+  $("bankBranch").value = doc.bankBranch ?? "";
+  $("bankType").value = doc.bankType ?? "";
 
   state.items = (doc.items ?? []).map((it) => makeItem(uuid(), it));
   if (state.items.length === 0) state.items = [makeItem(uuid())];
@@ -150,9 +156,12 @@ function compute() {
   const afterReturns = subtotal - returnAmount;
   const taxableBase = Math.max(0, afterReturns + charges - discount);
   const tax = taxableBase * (taxPct / 100);
-  const grand = taxableBase + tax;
+  const net = taxableBase + tax;
+  const roundedGrand = Math.round(net);
+  const roundOff = roundedGrand - net;
+  const grand = roundedGrand;
 
-  return { subtotal, returnAmount, afterReturns, charges, discount, tax, grand };
+  return { subtotal, returnAmount, afterReturns, charges, discount, tax, roundOff, grand };
 }
 
 /** Summary display: returns shown as a negative deduction. */
@@ -374,12 +383,14 @@ function renderPreview() {
 
   const payToWrap = $("vPayToWrap");
   const hasPay =
-    doc.bankName || doc.bankAcc || doc.bankIfsc || doc.bankHolder;
+    doc.bankName || doc.bankAcc || doc.bankIfsc || doc.bankHolder || doc.bankBranch || doc.bankType;
   payToWrap.style.display = hasPay ? "" : "none";
   setText("vBankName", doc.bankName);
   setText("vBankAcc", doc.bankAcc);
   setText("vBankIfsc", doc.bankIfsc);
   setText("vBankHolder", doc.bankHolder);
+  setText("vBankBranch", doc.bankBranch);
+  setText("vBankType", doc.bankType);
 
   const vItems = $("vItems");
   vItems.innerHTML = "";
@@ -424,12 +435,13 @@ function renderPreview() {
 }
 
 function renderPreviewTotalsOnly() {
-  const { subtotal, returnAmount, charges, discount, tax, grand } = compute();
+  const { subtotal, returnAmount, charges, discount, tax, roundOff, grand } = compute();
   $("vSubtotal").textContent = money(subtotal);
   $("vReturnAmount").textContent = formatReturnAmountLine(returnAmount);
   $("vCharges").textContent = money(charges);
   $("vDiscount").textContent = money(discount);
   $("vTax").textContent = money(tax);
+  $("vRoundOff").textContent = money(roundOff);
   $("vGrand").textContent = money(grand);
 }
 
@@ -467,6 +479,8 @@ function attachLivePreview() {
     "bankAcc",
     "bankIfsc",
     "bankHolder",
+    "bankBranch",
+    "bankType",
   ];
 
   for (const id of ids) {
